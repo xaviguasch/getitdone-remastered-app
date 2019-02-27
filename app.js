@@ -40,11 +40,21 @@ const defaultItems = [item1, item2, item3]
 
 
 
+const listSchema = {
+    name: String,
+    items: [itemsSchema]
+}
+
+const List = mongoose.model('List', listSchema)
+
+
+
+
+
 
 
 
 app.get("/", function (req, res) {
-
 
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
@@ -62,11 +72,7 @@ app.get("/", function (req, res) {
                 newListItems: foundItems
             });
         }
-
     })
-
-
-
 });
 
 app.post("/", function (req, res) {
@@ -82,6 +88,9 @@ app.post("/", function (req, res) {
     res.redirect('/')
 });
 
+
+
+
 app.post('/delete', function (req, res) {
 
     const checkedItemId = req.body.checkbox
@@ -91,26 +100,48 @@ app.post('/delete', function (req, res) {
             console.log(err);
         } else {
             console.log('You have deleted the checked item!!!!');
+            res.redirect('/')
         }
     })
-
-    res.redirect('/')
-
-
 })
 
 
 
 
 
+app.get('/:customListName/', function (req, res) {
+    const customListName = req.params.customListName
 
 
-app.get("/work", function (req, res) {
-    res.render("list", {
-        listTitle: "Work List",
-        newListItems: workItems
-    });
-});
+    List.findOne({
+        name: customListName
+    }, function (err, foundList) { // foundList is an object
+        if (!err) {
+            if (!foundList) {
+                console.log('Does not exist!');
+            } else {
+                console.log(foundList);
+
+            }
+
+        }
+
+
+    })
+
+
+    // const list = new List({
+    //     name: customListName,
+    //     items: defaultItems
+    // })
+
+    // list.save()
+
+
+
+})
+
+
 
 app.get("/about", function (req, res) {
     res.render("about");
