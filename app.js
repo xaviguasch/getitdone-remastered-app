@@ -111,14 +111,26 @@ app.post('/delete', function (req, res) {
 
 
 
-    if (listName === ' Today') {
-        console.log('eii');
-
+    if (listName === 'Today') {
 
         Item.findByIdAndDelete(checkedItemId, function (err) {
             if (!err) {
                 console.log('You have deleted the checked item!!!!');
                 res.redirect('/')
+            }
+        })
+    } else {
+        List.findOneAndUpdate({
+            name: listName
+        }, {
+            $pull: {
+                items: {
+                    _id: checkedItemId
+                }
+            }
+        }, function (err, foundList) {
+            if (!err) {
+                res.redirect('/' + listName)
             }
         })
     }
