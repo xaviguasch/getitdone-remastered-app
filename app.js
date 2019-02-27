@@ -118,24 +118,32 @@ app.get('/:customListName/', function (req, res) {
     }, function (err, foundList) { // foundList is an object
         if (!err) {
             if (!foundList) {
-                console.log('Does not exist!');
+                // Create a new list
+                const list = new List({
+                    name: customListName,
+                    items: defaultItems
+                })
+
+                list.save()
+                res.redirect('/' + customListName)
+
             } else {
                 console.log(foundList);
+                // Show an existing list
+                res.render("list", {
+                    listTitle: foundList.name,
+                    newListItems: foundList.items
+                });
+
 
             }
-
         }
 
 
     })
 
 
-    // const list = new List({
-    //     name: customListName,
-    //     items: defaultItems
-    // })
 
-    // list.save()
 
 
 
