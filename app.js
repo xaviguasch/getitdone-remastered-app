@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect(`mongodb+srv://admin-xavi:${process.env.PASSWORD}@cluster0-8chlk.mongodb.net/todolistDB`, {
+mongoose.connect(`mongodb+srv://admin-xavi:Test123@cluster0-8chlk.mongodb.net/todolistDB`, {
     useNewUrlParser: true
 })
 
