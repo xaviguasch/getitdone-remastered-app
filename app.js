@@ -5,7 +5,6 @@ const mongoose = require("mongoose")
 const _ = require('lodash')
 
 
-const config = require('./config');
 
 
 
@@ -22,7 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect(`mongodb+srv://admin-xavi:${config.MONGO_ADMIN_PASSWORD}@cluster0-8chlk.mongodb.net/todolistDB`, {
+mongoose.connect(`mongodb+srv://admin-xavi:${process.env.PASSWORD}@cluster0-8chlk.mongodb.net/todolistDB`, {
     useNewUrlParser: true
 })
 
